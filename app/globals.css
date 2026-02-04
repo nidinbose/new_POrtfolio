@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* .triangle {
+  clip-path: polygon(50% 100%, 0 0, 100% 0);
+} */
+
+@font-face {
+  font-family: 'sas';
+  src: url('/Font/Gerbil.otf') format('opentype');
+
+}
+
+body {
+  font-family: 'sas', sans-serif;
+  letter-spacing: 3px;
+  background-color: black;
+}
+
+
+.outer-triangle {
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(135deg, red, red);
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.inner-triangle {
+  width: 70px;
+  height: 70px;
+  background: rgb(255, 255, 255);
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.white-triangle {
+  width: 45px;
+  height: 45px;
+  background:rgb(175, 173, 173);
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+   display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.gray-triangle {
+  width: 30px;
+  height: 30px;
+  background:black;
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}

@@ -170,7 +170,7 @@ export default function AboutFull() {
             <hr className="divider-line mt-12 mb-12 sm:mt-20 sm:mb-20 border-white" />
 
             <div className="grid grid-cols-3 sm:grid-cols-3 gap-6 sm:gap-4">
-              {[2, '10+', '100%'].map((stat, i) => (
+              {[1, '15+', '100%'].map((stat, i) => (
                 <div key={i} className="flex flex-col gap-1 sm:gap-2 p-2" ref={addToRefs}>
                   <h1 className="text-lg sm:text-2xl md:text-3xl font-medium">{stat}</h1>
                   <h2 className="text-[9px] sm:text-sm">

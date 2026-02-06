@@ -6,6 +6,19 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 export default function AboutExp() {
   const experiences = [
+        {
+      title: 'MERN Stack Developer',
+      company: 'Flipmaxx Global LLP',
+      type: 'Full-time',
+      duration: 'June 2024 - Present · 8+ months',
+      logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSS-26YPzOttlgRKjnvFeY3grOIzo8IqS4naQ&s',
+      points: [
+        'Developed and maintained full-stack web applications using MongoDB, Express.js, React, and Node.js',
+        'Implemented RESTful APIs and integrated third-party services',
+        'Optimized application performance and implemented responsive designs',
+        'Collaborated with team members using Git version control',
+      ],
+    },
     {
       title: 'MERN Stack Developer',
       company: 'Syneffo Solutions',

@@ -38,9 +38,10 @@ export default function AboutSkills() {
     {
       title: 'Libraries & Frameworks',
       items: [
-        { name: 'Node.js', image: 'https://seeklogo.com/images/N/nodejs-logo-52F5C0204E-seeklogo.com.png', link: 'https://nodejs.org/' },
+        { name: 'Node.js', image: 'https://www.vhv.rs/dpng/d/546-5460201_node-js-logo-png-transparent-png.png', link: 'https://nodejs.org/' },
         { name: 'Express', image: 'https://img.icons8.com/color/512/express-js.png', link: 'https://expressjs.com/' },
         { name: 'React.js', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFi4_-9fNmkOc4nkBq6YLPG8higxuZsBuXGQ&s', link: 'https://reactjs.org/' },
+         { name: 'Redux', image: 'https://upload.wikimedia.org/wikipedia/commons/4/49/Redux.png', link: 'https://react-redux.js.org/' },
         { name: 'Tailwind CSS', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSDKn3vA2YUbXzN0ZC3gALWJ08gJN-Drl15w&s', link: 'https://tailwindcss.com/' },
         { name: 'Bootstrap', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqf-Kqyd8dSvhhufDguf9CsTZStGVsoSQ5dg&s', link: 'https://getbootstrap.com/' },
         { name: 'Ionic', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxK7XvFfNJlCNEaeEsEKIu2_SNcNxp_248-w&s', link: 'https://ionicframework.com/' },
@@ -55,7 +56,7 @@ export default function AboutSkills() {
         { name: 'AWS', image: 'https://download.logo.wine/logo/Amazon_Web_Services/Amazon_Web_Services-Logo.wine.png', link: 'https://aws.amazon.com/' },
         { name: 'Netlify', image: 'https://cdn.cosmicjs.com/547d4e20-dd7e-11ee-b074-b5c8fe3ef189-netlify-light.png', link: 'https://www.netlify.com/' },
         { name: 'Vercel', image: 'https://content.instructables.com/FQ5/ICIZ/L8D2F8CO/FQ5ICIZL8D2F8CO.jpg?auto=webp', link: 'https://vercel.com/' },
-        { name: 'Render', image: 'https://pbs.twimg.com/profile_images/1735429515541938176/zOO1N7Su_400x400.jpg', link: 'https://render.com/' },
+        { name: 'Render', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9_D-bYIJ7TMSPIYckTgaJAa3wnhVaDg2jng&s', link: 'https://render.com/' },
         { name: 'Firebase', image: 'https://firebase.google.com/static/images/brand-guidelines/logo-vertical.png', link: 'https://firebase.google.com/' },
       ],
     },

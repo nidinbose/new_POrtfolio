@@ -80,6 +80,7 @@ export default function Navbar() {
   }, []);
 
   const links = [
+       { name: "Home", href: "/" },
     { name: "About", href: "/About" },
     { name: "Projects", href: "/Projects" },
     { name: "Shop", href: "/Shop" },

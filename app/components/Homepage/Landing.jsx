@@ -153,7 +153,7 @@ export default function Landing() {
         </div>
 
         <div
-          className="text-white absolute p-8 z-20 text-xs font-light text-[6px] max-w-sm md:max-w-xl space-y-1 md:space-y-6 right-2 md:right-20 bottom-0 md:bottom-20 mt-7 md:mt-1"
+          className="text-white absolute p-8 z-20 md:text-xs font-light text-[8px] max-w-sm md:max-w-xl space-y-1 md:space-y-6 right-2 md:right-20 bottom-0 md:bottom-20 mt-7 md:mt-1"
           id="intro-text"
         >
           <p>
@@ -179,10 +179,6 @@ export default function Landing() {
             with 
             express 
             js 
-            and 
-            managing 
-            data 
-            using 
           </p>
         </div>
 

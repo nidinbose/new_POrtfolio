@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import BlurText from "../Engine/Splittext";
+import Image from "next/image";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -107,7 +108,7 @@ export default function Landing() {
     <div ref={mainRef} className="w-full min-h-full pt-12 bg-transparent text-white overflow-hidden">
       {/* Spacer for scroll animation */}
       <div className="zoom-spacer h-[220vh] md:h-[400vh] bg-transparent" />
-       
+
       {/* Zoom animation overlay */}
       <div className="zoom-overlay fixed top-0 left-0 w-full h-full flex items-center justify-center bg-transparent z-30 pointer-events-none text-[30px] sm:text-[50px] md:text-[100px] font-bold">
         <div
@@ -157,28 +158,28 @@ export default function Landing() {
           id="intro-text"
         >
           <p>
-            Proficient 
-            in 
-            MERN 
-            Stack 
-            for 
-            building 
-            full-stack 
-            web 
-            applications. 
-            Skilled 
-            in 
-            creating 
-            responsive 
-            ui 
-            with 
-            react 
-            designing 
-            restful 
-            APIs 
-            with 
-            express 
-            js 
+            Proficient
+            in
+            MERN
+            Stack
+            for
+            building
+            full-stack
+            web
+            applications.
+            Skilled
+            in
+            creating
+            responsive
+            ui
+            with
+            react
+            designing
+            restful
+            APIs
+            with
+            express
+            js
           </p>
         </div>
 
@@ -209,7 +210,14 @@ export default function Landing() {
             boxShadow: "0 40px 80px rgba(235, 231, 231, 0.27)",
           }}
         >
-         <img src="./Images/PF.png" alt=""  className="object-cover  -scale-x-100"/>
+          <Image
+            src="/Images/PF.png"
+            alt="Profile"
+            fill
+            className="object-cover -scale-x-100"
+            priority
+            sizes="(max-width: 768px) 100vw, 50vw"
+          />
         </div>
 
         {/* Mirror Reflection */}
@@ -222,13 +230,20 @@ export default function Landing() {
             WebkitMaskImage: "linear-gradient(to bottom, rgba(255,255,255,0.4), transparent)",
           }}
         >
-       <img src="./Images/PF.png" alt=""  className="object-cover"/>
+          <Image
+            src="/Images/PF.png"
+            alt="Profile Reflection"
+            fill
+            className="object-cover"
+            priority
+            sizes="(max-width: 768px) 100vw, 50vw"
+          />
         </div>
       </div>
 
       {/* SECTION 3 */}
       <div className="h-full bg-transparent mb-20 flex items-center justify-center">
-       
+
       </div>
     </div>
   );

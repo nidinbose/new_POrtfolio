@@ -54,13 +54,13 @@ export default function Services() {
   }, [isMobile])
 
   return (
-    <div className="z-0">
-      <div className="fixed inset-0 h-full w-full pointer-events-none">
+    <div className="relative w-full min-h-screen bg-black text-white overflow-x-hidden">
+      <div className="fixed inset-0 h-full w-full pointer-events-none z-0">
         <SplashCursor />
       </div>
-      <div id="smooth-wrapper" className={`flex-1 ${isMobile ? '' : 'overflow-hidden'}`}>
-        <div id="smooth-content" className="relative will-change-transform">
-          <div id="services-content" className="relative z-10 w-full flex flex-col text-white mx-auto container">
+      <div id="smooth-wrapper" className={`relative z-10 w-full flex flex-col ${isMobile ? '' : 'overflow-hidden'}`}>
+        <div id="smooth-content" className="relative w-full flex flex-col">
+          <div id="services-content" className="relative w-full flex flex-col container mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-40">
             <section className="flex-grow">
               <div className="px-5 md:px-10 py-20 max-w-7xl mx-auto space-y-10">
                 <Splittext

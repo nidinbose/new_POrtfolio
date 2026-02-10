@@ -1,43 +1,19 @@
 'use client'
 
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import dynamic from 'next/dynamic'
 
-// Component Loader
-const ServiceCardLoader = () => (
-    <div className="w-full h-full relative flex items-center justify-center">
-        <div className="absolute inset-0 rounded-xl bg-transparent animate-pulse"></div>
-        <div className="w-full h-full relative flex items-center justify-center">
-            <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 animate-spin blur-sm"></div>
-            <div className="absolute inset-1 bg-gray-900 rounded-lg flex items-center justify-center overflow-hidden">
-                <div className="flex gap-1 items-center">
-                    <div className="w-1.5 h-12 bg-cyan-500 rounded-full animate-[bounce_1s_ease-in-out_infinite]"></div>
-                    <div className="w-1.5 h-12 bg-blue-500 rounded-full animate-[bounce_1s_ease-in-out_infinite_0.1s]"></div>
-                    <div className="w-1.5 h-12 bg-indigo-500 rounded-full animate-[bounce_1s_ease-in-out_infinite_0.2s]"></div>
-                    <div className="w-1.5 h-12 bg-purple-500 rounded-full animate-[bounce_1s_ease-in-out_infinite_0.3s]"></div>
-                </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-transparent via-blue-500/10 to-transparent animate-pulse"></div>
-            </div>
-        </div>
-        <div className="absolute -top-1 -left-1 w-2 h-2 bg-blue-500 rounded-full animate-ping"></div>
-        <div className="absolute -top-1 -right-1 w-2 h-2 bg-purple-500 rounded-full animate-ping delay-100"></div>
-        <div className="absolute -bottom-1 -left-1 w-2 h-2 bg-cyan-500 rounded-full animate-ping delay-200"></div>
-        <div className="absolute -bottom-1 -right-1 w-2 h-2 bg-blue-500 rounded-full animate-ping delay-300"></div>
-    </div>
-);
-
-// Dynamically import SVG components with no SSR and custom loader
-// Dynamically import SVG components with no SSR and custom loader
-const ApiDevelopmentSvg = dynamic(() => import("../Svg/Apisvg"), { ssr: false, loading: ServiceCardLoader })
-const ScrollSvg = dynamic(() => import("../Homepage/TitleAnimation"), { ssr: false, loading: ServiceCardLoader })
-const MernStackSvg = dynamic(() => import("../Svg/Mernsvg"), { ssr: false, loading: ServiceCardLoader })
-const ApiRequestSvg = dynamic(() => import("../Svg/Datasvg"), { ssr: false, loading: ServiceCardLoader })
-const NextJsSvg = dynamic(() => import("../Svg/Nextsvg"), { ssr: false, loading: ServiceCardLoader })
-const DockerAnimation = dynamic(() => import("../Svg/Micro"), { ssr: false, loading: ServiceCardLoader })
-const AwsSvg = dynamic(() => import("../Svg/Aws"), { ssr: false, loading: ServiceCardLoader })
-const UIAnimationSvg = dynamic(() => import("../Svg/UIsvg"), { ssr: false, loading: ServiceCardLoader })
+// Dynamically import SVG components with no SSR to reduce bundle size
+const ApiDevelopmentSvg = dynamic(() => import("../Svg/Apisvg"), { ssr: false })
+const ScrollSvg = dynamic(() => import("../Homepage/TitleAnimation"), { ssr: false })
+const MernStackSvg = dynamic(() => import("../Svg/Mernsvg"), { ssr: false })
+const ApiRequestSvg = dynamic(() => import("../Svg/Datasvg"), { ssr: false })
+const NextJsSvg = dynamic(() => import("../Svg/Nextsvg"), { ssr: false })
+const DockerAnimation = dynamic(() => import("../Svg/Micro"), { ssr: false })
+const AwsSvg = dynamic(() => import("../Svg/Aws"), { ssr: false })
+const UIAnimationSvg = dynamic(() => import("../Svg/UIsvg"), { ssr: false })
 
 const data = [
     {
@@ -104,56 +80,83 @@ export default function CardsService() {
         gsap.registerPlugin(ScrollTrigger)
 
         // Clean up any previous animations
-        ScrollTrigger.getAll().forEach(trigger => trigger.kill())
+        if (animationRef.current) {
+            animationRef.current.kill()
+            ScrollTrigger.getAll().forEach(trigger => trigger.kill())
+        }
 
         const cards = gsap.utils.toArray(".service-card")
+        gsap.set(cards, {
+            y: 50,
+            opacity: 0,
+            scale: 0.98
+        })
 
-        // Animate cards individually when they come into view
+        const masterTl = gsap.timeline({
+            scrollTrigger: {
+                trigger: containerRef.current,
+                start: "top bottom",
+                end: "bottom top",
+                toggleActions: "play none none none",
+            }
+        })
+
         cards.forEach((card, index) => {
             const title = card.querySelector("h1")
             const description = card.querySelector("p")
-            const svgContainer = card.querySelector(".svg-container")
 
-            const tl = gsap.timeline({
-                scrollTrigger: {
-                    trigger: card,
-                    start: "top 85%", // Start animation when top of card hits 85% of viewport height
-                    end: "bottom 20%",
-                    toggleActions: "play none none reverse",
-                }
+            gsap.set([title, description], {
+                y: "100%",
+                opacity: 0
             })
 
-            tl.fromTo(card,
-                { y: 50, opacity: 0, scale: 0.95 },
-                { y: 0, opacity: 1, scale: 1, duration: 0.6, ease: "power2.out" }
-            )
-                .fromTo([title, description],
-                    { y: 20, opacity: 0 },
-                    { y: 0, opacity: 1, duration: 0.4, stagger: 0.1 },
-                    "-=0.3"
-                )
+            masterTl.to(card, {
+                y: 0,
+                opacity: 1,
+                scale: 1,
+                duration: 0.8,
+                ease: "power3.out"
+            }, index * 0.1)
 
-            if (svgContainer) {
-                tl.fromTo(svgContainer,
-                    { scale: 0.8, opacity: 0 },
-                    { scale: 1, opacity: 1, duration: 0.5 },
-                    "-=0.4"
-                )
-            }
+            masterTl.to([title, description], {
+                y: 0,
+                opacity: 1,
+                duration: 0.6,
+                ease: "power2.out",
+                stagger: 0.1
+            }, index * 0.1 + 0.4)
 
-            // Hover effects (desktop only)
+            // Only add event listeners if not touch device
             if (!('ontouchstart' in window)) {
                 card.addEventListener("mouseenter", () => {
-                    gsap.to(card, { y: -5, duration: 0.3, ease: "power2.out", borderColor: "rgba(255,255,255,0.5)" })
+                    gsap.to(card, {
+                        y: -5,
+                        duration: 0.3,
+                        ease: "power2.out"
+                    })
                 })
+
                 card.addEventListener("mouseleave", () => {
-                    gsap.to(card, { y: 0, duration: 0.3, ease: "power2.out", borderColor: "rgba(255,255,255,0.2)" })
+                    gsap.to(card, {
+                        y: 0,
+                        duration: 0.3,
+                        ease: "power2.out"
+                    })
                 })
             }
         })
 
+        animationRef.current = masterTl
+
         return () => {
             ScrollTrigger.getAll().forEach(trigger => trigger.kill())
+            if (animationRef.current) {
+                animationRef.current.kill()
+            }
+            cards.forEach(card => {
+                card.removeEventListener("mouseenter")
+                card.removeEventListener("mouseleave")
+            })
         }
     }, [])
 

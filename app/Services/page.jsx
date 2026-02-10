@@ -1,30 +1,40 @@
 'use client'
 
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { ScrollSmoother } from "gsap/ScrollSmoother"
-import SplashCursor from "../components/Engine/Splash"
+import dynamic from 'next/dynamic'
 import Splittext from '../components/Engine/Splittext'
-import ScrollExploration from "../components/Engine/ServicesSection"
 import CardsService from "../components/ServicesC/CardsService"
 import Footer from "../components/Homepage/Footer"
+import useIsMobile from "../hooks/useIsMobile"
+
+const SplashCursor = dynamic(() => import("../components/Engine/Splash"), { ssr: false })
+const ScrollExploration = dynamic(() => import("../components/Engine/ServicesSection"), { ssr: false })
 
 export default function Services() {
+  const isMobile = useIsMobile();
   const textLines = [
     "We take a creative and strategic approach to help you achieve your business goals and tackle your most pressing tasks."
   ];
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
-    const smoother = ScrollSmoother.create({
-      wrapper: '#smooth-wrapper',
-      content: '#smooth-content',
-      smooth: 1.2,
-      effects: true,
-      normalizeScroll: true,
-      ignoreMobileResize: true,
-    })
+
+    // Only enable ScrollSmoother on non-mobile devices
+    let smoother;
+    if (!isMobile) {
+      smoother = ScrollSmoother.create({
+        wrapper: '#smooth-wrapper',
+        content: '#smooth-content',
+        smooth: 1.2,
+        effects: true,
+        normalizeScroll: true,
+        ignoreMobileResize: true,
+      })
+    }
+
     gsap.to("#services-content", {
       y: 0,
       ease: "power1.out",
@@ -41,7 +51,7 @@ export default function Services() {
       if (smoother) smoother.kill()
       ScrollTrigger.getAll().forEach(trigger => trigger.kill())
     }
-  }, [])
+  }, [isMobile])
 
   return (
     <div className="z-0">
@@ -56,20 +66,20 @@ export default function Services() {
                 <Splittext
                   text={textLines.join(' ')}
                   className="text-xl sm:text-2xl md:text-4xl lg:text-5xl text-white font-semibold leading-snug md:leading-snug gap-y-1 lg:gap-y-3 tracking-wide max-w-4xl"
-                delay={30}/>
+                  delay={30} />
                 <Splittext
                   text="People are already looking for your products or services on the Internet. Our main task is to provide them with the most convenient tool for communicating with your company. Being on the Internet is not a privilege now, it's a necessity."
                   className="text-[10px] md:text-md font-medium leading-relaxed tracking-wide text-white max-w-md mt-10 md:pt-60"
-                delay={30}/>
+                  delay={30} />
               </div>
             </section>
-            
+
             <section className="h-full mb-10">
-              <ScrollExploration/>
+              {!isMobile && <ScrollExploration />}
             </section>
             <section className="w-full h-full">
               <CardsService />
-              <Footer/>
+              <Footer />
             </section>
           </div>
         </div>

@@ -58,7 +58,7 @@ export default function Services() {
       <div className="fixed inset-0 h-full w-full pointer-events-none">
         <SplashCursor />
       </div>
-      <div id="smooth-wrapper" className="flex-1 overflow-hidden">
+      <div id="smooth-wrapper" className={`flex-1 ${isMobile ? '' : 'overflow-hidden'}`}>
         <div id="smooth-content" className="relative will-change-transform">
           <div id="services-content" className="relative z-10 w-full flex flex-col text-white mx-auto container">
             <section className="flex-grow">

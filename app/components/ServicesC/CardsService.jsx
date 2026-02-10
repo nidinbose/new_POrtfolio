@@ -104,83 +104,56 @@ export default function CardsService() {
         gsap.registerPlugin(ScrollTrigger)
 
         // Clean up any previous animations
-        if (animationRef.current) {
-            animationRef.current.kill()
-            ScrollTrigger.getAll().forEach(trigger => trigger.kill())
-        }
+        ScrollTrigger.getAll().forEach(trigger => trigger.kill())
 
         const cards = gsap.utils.toArray(".service-card")
-        gsap.set(cards, {
-            y: 50,
-            opacity: 0,
-            scale: 0.98
-        })
 
-        const masterTl = gsap.timeline({
-            scrollTrigger: {
-                trigger: containerRef.current,
-                start: "top bottom",
-                end: "bottom top",
-                toggleActions: "play none none none",
-            }
-        })
-
+        // Animate cards individually when they come into view
         cards.forEach((card, index) => {
             const title = card.querySelector("h1")
             const description = card.querySelector("p")
+            const svgContainer = card.querySelector(".svg-container")
 
-            gsap.set([title, description], {
-                y: "100%",
-                opacity: 0
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top 85%", // Start animation when top of card hits 85% of viewport height
+                    end: "bottom 20%",
+                    toggleActions: "play none none reverse",
+                }
             })
 
-            masterTl.to(card, {
-                y: 0,
-                opacity: 1,
-                scale: 1,
-                duration: 0.8,
-                ease: "power3.out"
-            }, index * 0.1)
+            tl.fromTo(card,
+                { y: 50, opacity: 0, scale: 0.95 },
+                { y: 0, opacity: 1, scale: 1, duration: 0.6, ease: "power2.out" }
+            )
+                .fromTo([title, description],
+                    { y: 20, opacity: 0 },
+                    { y: 0, opacity: 1, duration: 0.4, stagger: 0.1 },
+                    "-=0.3"
+                )
 
-            masterTl.to([title, description], {
-                y: 0,
-                opacity: 1,
-                duration: 0.6,
-                ease: "power2.out",
-                stagger: 0.1
-            }, index * 0.1 + 0.4)
+            if (svgContainer) {
+                tl.fromTo(svgContainer,
+                    { scale: 0.8, opacity: 0 },
+                    { scale: 1, opacity: 1, duration: 0.5 },
+                    "-=0.4"
+                )
+            }
 
-            // Only add event listeners if not touch device
+            // Hover effects (desktop only)
             if (!('ontouchstart' in window)) {
                 card.addEventListener("mouseenter", () => {
-                    gsap.to(card, {
-                        y: -5,
-                        duration: 0.3,
-                        ease: "power2.out"
-                    })
+                    gsap.to(card, { y: -5, duration: 0.3, ease: "power2.out", borderColor: "rgba(255,255,255,0.5)" })
                 })
-
                 card.addEventListener("mouseleave", () => {
-                    gsap.to(card, {
-                        y: 0,
-                        duration: 0.3,
-                        ease: "power2.out"
-                    })
+                    gsap.to(card, { y: 0, duration: 0.3, ease: "power2.out", borderColor: "rgba(255,255,255,0.2)" })
                 })
             }
         })
 
-        animationRef.current = masterTl
-
         return () => {
             ScrollTrigger.getAll().forEach(trigger => trigger.kill())
-            if (animationRef.current) {
-                animationRef.current.kill()
-            }
-            cards.forEach(card => {
-                card.removeEventListener("mouseenter")
-                card.removeEventListener("mouseleave")
-            })
         }
     }, [])
 
@@ -197,7 +170,7 @@ export default function CardsService() {
                             <h1 className="mt-7 text-sm md:text-2xl font-medium">
                                 {item.service}
                             </h1>
-                            <div className="w-80 h-80">
+                            <div className="w-80 h-80 svg-container">
                                 {item.svg}
                             </div>
 
